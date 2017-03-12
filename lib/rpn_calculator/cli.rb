@@ -1,22 +1,25 @@
 require "optparse"
-require 'rpn_calculator/interactive_calculator'
 
 module RpnCalculator
   class Cli
     class ParseError < StandardError; end
 
-    attr_accessor :argv, :output_stream, :error_stream
+    attr_accessor :io_streams, :logger, :lexer, :calculator
 
-    def initialize(argv = ARGV, output_stream = STDOUT, error_stream = STDERR)
-      self.argv = argv
-      self.output_stream = output_stream
-      self.error_stream = error_stream
+    def initialize(io_streams: IOStreams.new,
+                   logger: Logger.new(io_streams),
+                   lexer: Lexer.new,
+                   calculator: Calculator.new)
+      self.io_streams = io_streams
+      self.logger = logger
+      self.lexer = lexer
+      self.calculator = calculator
 
       self.option_parser = OptionParser.new do |parser|
         parser.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
         parser.on "-h", "--help", "Prints help" do
-          output_stream.puts parser
+          logger.message parser
         end
       end
     end
@@ -24,7 +27,17 @@ module RpnCalculator
     def start
       parse_options!
 
-      InteractiveCalculator.start
+      logger.next_line
+
+      io_streams.argf.each_line do |line|
+        logger.message calculator.run lexer.parse line
+        lexer.quit? && break
+        logger.next_line
+      end
+
+    rescue Interrupt, EOFError
+    ensure
+      logger.goodbye
     end
 
     private
@@ -32,11 +45,11 @@ module RpnCalculator
     attr_accessor :option_parser
 
     def parse_options!
-      $stdout = output_stream
-      $stderr = error_stream
-      option_parser.parse argv
+      $stdout = io_streams.output_stream
+      $stderr = io_streams.output_stream
+      option_parser.parse io_streams.argv
     rescue OptionParser::ParseError => error
-      error_stream.puts error, option_parser
+      logger.error error, option_parser
 
       raise ParseError.new(error)
     ensure

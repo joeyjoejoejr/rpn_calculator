@@ -1,8 +1,7 @@
 #! /usr/bin/env ruby -w
 
-
 $LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
-require "rpn_calculator/cli"
+require "rpn_calculator"
 
 begin
   RpnCalculator::Cli.new.start

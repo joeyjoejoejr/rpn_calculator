@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe "CLI Usage", type: :aruba do
-  before :each{ run 'rpn_calculator' }
+  before(:each) { run 'rpn_calculator' }
 
   it "adds two numbers" do
     type("1 1 + q\n")
