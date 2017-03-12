@@ -6,6 +6,8 @@ module RpnCalculator
     let(:input_stream) { StringIO.new }
 
     describe "::start" do
+      before(:each) { allow(input_stream).to receive(:isatty).and_return true }
+
       describe "formatting" do
         it "shows a prompt on each line" do
           input_stream.puts "q"
@@ -32,6 +34,16 @@ module RpnCalculator
           InteractiveCalculator.start(input_stream, output_stream)
 
           expect(output_stream.string).to match /#{InteractiveCalculator::GOODBYE_MESSAGE}/i
+        end
+
+        it "doesn't show interactive output if it's not tty" do
+          allow(input_stream).to receive(:isatty).and_return false
+          input_stream.puts "q"
+          input_stream.rewind
+
+          InteractiveCalculator.start(input_stream, output_stream)
+
+          expect(output_stream.string).not_to match /#{InteractiveCalculator::GOODBYE_MESSAGE}/i
         end
       end
 
