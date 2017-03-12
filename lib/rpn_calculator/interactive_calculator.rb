@@ -11,7 +11,8 @@ module RpnCalculator
           case
           when token.match(/^-?[0-9]+$/)
             output_stream.puts token
-            digits = [digits[-1], token.to_i]
+            digits << token.to_i
+            digits = digits.last(2)
           when token.match(/^\+$/)
             output_stream.puts digits.reduce(:+)
             digits = []
