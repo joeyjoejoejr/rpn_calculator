@@ -25,7 +25,7 @@ module RpnCalculator
 
         expect {
           Cli.new(io_streams: io_streams).start
-        }.to raise_error(Cli::ParseError)
+        }.to raise_error(Options::ParseError)
 
         expect(err_stream.string).to match /invalid option/
       end
