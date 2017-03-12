@@ -7,6 +7,8 @@ module RpnCalculator
       let(:output_stream) { StringIO.new }
       let(:err_stream) { StringIO.new }
 
+      before(:each) { allow(InteractiveCalculator).to receive :start }
+
       it "prints the help output" do
         argv = %w{-h}
 
@@ -25,8 +27,8 @@ module RpnCalculator
        expect(err_stream.string).to match /invalid option/
       end
 
-      it "starts the interractive REPL if -i" do
-        argv = %{-i}
+      it "starts the interractive REPL" do
+        argv = []
 
         expect(InteractiveCalculator).to receive(:start)
 
