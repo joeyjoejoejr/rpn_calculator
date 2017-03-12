@@ -6,16 +6,36 @@ module RpnCalculator
     let(:input_stream) { StringIO.new }
 
     describe "::start" do
-      describe "commands" do
-        it "q command quits with a message" do
+      describe "formatting" do
+        it "shows a prompt on each line" do
           input_stream.puts "q"
           input_stream.rewind
 
           InteractiveCalculator.start(input_stream, output_stream)
 
-          expect(output_stream.string).to match /goodbye/i
+          expect(output_stream.string).to match /#{InteractiveCalculator::PROMPT_MESSAGE}/
         end
 
+        it "echoes the input" do
+          input_stream.puts "10 q"
+          input_stream.rewind
+
+          InteractiveCalculator.start(input_stream, output_stream)
+
+          expect(output_stream.string).to match /10/
+        end
+
+        it "shows the quitting message" do
+          input_stream.puts "q"
+          input_stream.rewind
+
+          InteractiveCalculator.start(input_stream, output_stream)
+
+          expect(output_stream.string).to match /#{InteractiveCalculator::GOODBYE_MESSAGE}/i
+        end
+      end
+
+      describe "commands" do
         describe "+ command" do
           it "adds queued numbers" do
             input_stream.puts "1 1 + q"
@@ -39,7 +59,7 @@ module RpnCalculator
             input_stream.rewind
 
             InteractiveCalculator.start(input_stream, output_stream)
-            expect(output_stream.string).to match /goodbye/i
+            expect { output_stream.string }.not_to raise_error
           end
 
           it "only operates on the last two numbers" do
