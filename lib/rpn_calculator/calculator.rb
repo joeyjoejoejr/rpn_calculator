@@ -1,7 +1,7 @@
 module RpnCalculator
   class Calculator
     def initialize
-      @operands = [0]
+      @operands = []
     end
 
     def run(tokens)

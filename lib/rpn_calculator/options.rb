@@ -12,6 +12,7 @@ module RpnCalculator
 
         parser.on "-h", "--help", "Prints help" do
           logger.message parser
+          raise ParseError.new("exit")
         end
 
         parser.on(

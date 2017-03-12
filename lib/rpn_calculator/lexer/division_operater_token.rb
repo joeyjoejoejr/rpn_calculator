@@ -9,7 +9,7 @@ module RpnCalculator
       def execute(operands)
         operands.last(2).reduce(value).tap do |result|
           raise ZeroDivisionError unless result.finite?
-          operands.push result
+          operands.push(result).compact!
         end
 
       rescue ZeroDivisionError

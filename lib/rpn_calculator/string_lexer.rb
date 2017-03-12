@@ -5,7 +5,7 @@ module RpnCalculator
         case
         when token_string.match(/^\w+$/)
           Lexer::OperandToken.new token_string
-        when token_string.match(/!concat/)
+        when token_string.match(/!(concat|sentence|capitalize|reverse)/)
           Lexer::StringOperatorToken.new token_string[1..-1].to_sym
         when token_string.match(/^\/q$/i)
           @quit = true
@@ -15,7 +15,10 @@ module RpnCalculator
     end
 
     def quit?
-      @quit
+      quit
     end
+
+    private
+    attr_accessor :quit
   end
 end

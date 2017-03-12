@@ -5,7 +5,6 @@ require "rpn_calculator"
 
 begin
   RpnCalculator::Cli.new.start
-rescue StandardError => error
-  STDERR.puts error
+rescue StandardError
   exit 1
 end

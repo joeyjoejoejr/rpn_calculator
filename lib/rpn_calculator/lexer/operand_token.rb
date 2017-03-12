@@ -8,6 +8,7 @@ module RpnCalculator
 
       def execute(operands)
         operands.push(value)
+        value
       end
     end
   end

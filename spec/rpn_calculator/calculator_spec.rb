@@ -24,7 +24,7 @@ module RpnCalculator
 
         result = calculator.run tokens
 
-        expect(result).to be 0
+        expect(result).to be nil
       end
 
       it "only operates on the last two numbers" do
