@@ -4,7 +4,7 @@ module RpnCalculator
 
     attr_accessor :io_streams, :parser, :logger
 
-    def initialize(io_streams, logger)
+    def initialize(io_streams, logger, &block)
       self.io_streams = io_streams
       self.logger = logger
       self.parser = OptionParser.new do |parser|
@@ -12,6 +12,14 @@ module RpnCalculator
 
         parser.on "-h", "--help", "Prints help" do
           logger.message parser
+        end
+
+        parser.on(
+          "--type [CALC_TYPE]",
+          %i{number string},
+          "Select type of calculator (number[default], string)"
+        ) do |t|
+          block && block.call(t)
         end
       end
     end

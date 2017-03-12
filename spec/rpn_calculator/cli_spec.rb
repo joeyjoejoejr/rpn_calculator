@@ -11,6 +11,15 @@ module RpnCalculator
                     argf: input_stream)
     end
 
+    describe "::new" do
+      it "initializes with the string lexer" do
+        io_streams.argv = %w{-t string}
+
+        cli = Cli.new(io_streams: io_streams)
+        expect(cli.lexer).to be_a StringLexer
+      end
+    end
+
     describe "#start" do
       it "prints the help output" do
         io_streams.argv = %w{-h}
