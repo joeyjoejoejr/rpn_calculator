@@ -26,7 +26,7 @@ module RpnCalculator
       end
 
       describe "parses operator" do
-        %w{+ - * /}.each do |operator|
+        %w{+ - * / ** %}.each do |operator|
           it operator do
             parsed = lexer.parse operator
 
