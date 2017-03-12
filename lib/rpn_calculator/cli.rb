@@ -26,7 +26,9 @@ module RpnCalculator
       logger.next_line
 
       io_streams.argf.each_line do |line|
-        logger.message calculator.run lexer.parse line
+        tokens = lexer.parse line
+        results = calculator.run tokens
+        logger.message results
         lexer.quit? && break
         logger.next_line
       end
