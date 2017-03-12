@@ -24,6 +24,7 @@ module RpnCalculator
       it "prints the help output" do
         io_streams.argv = %w{-h}
 
+        expect(io_streams).not_to receive(:argf)
         Cli.new(io_streams: io_streams).start
 
         expect(output_stream.string).to match /help/

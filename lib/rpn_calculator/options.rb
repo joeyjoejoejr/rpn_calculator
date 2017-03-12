@@ -12,7 +12,7 @@ module RpnCalculator
 
         parser.on "-h", "--help", "Prints help" do
           logger.message parser
-          raise ParseError.new("exit")
+          @is_help = true
         end
 
         parser.on(
@@ -37,5 +37,13 @@ module RpnCalculator
       $stdout = STDOUT
       $stderr = STDERR
     end
+
+    def is_help?
+      is_help
+    end
+
+    private
+
+    attr_accessor :is_help
   end
 end
