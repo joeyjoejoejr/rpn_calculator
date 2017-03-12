@@ -7,9 +7,9 @@ module RpnCalculator
     describe "#start" do
       it "adds negative numbers" do
         tokens = [
-          OperandToken.new(-1),
-          OperandToken.new(-1),
-          OperatorToken.new(:+),
+          Lexer::OperandToken.new(-1),
+          Lexer::OperandToken.new(-1),
+          Lexer::OperatorToken.new(:+),
         ]
 
         result = calculator.run tokens
@@ -19,7 +19,7 @@ module RpnCalculator
 
       it "works with no numbers" do
         tokens = [
-          OperatorToken.new(:+),
+          Lexer::OperatorToken.new(:+),
         ]
 
         result = calculator.run tokens
@@ -28,8 +28,8 @@ module RpnCalculator
       end
 
       it "only operates on the last two numbers" do
-        tokens = (1..100).map { |val| OperandToken.new(val) }
-        tokens << OperatorToken.new(:+)
+        tokens = (1..100).map { |val| Lexer::OperandToken.new(val) }
+        tokens << Lexer::OperatorToken.new(:+)
 
 
         result = calculator.run tokens
@@ -39,11 +39,11 @@ module RpnCalculator
 
       it "saves the last result in the operands" do
         tokens = [
-          OperandToken.new(1),
-          OperandToken.new(1),
-          OperatorToken.new(:+),
-          OperandToken.new(1),
-          OperatorToken.new(:+),
+          Lexer::OperandToken.new(1),
+          Lexer::OperandToken.new(1),
+          Lexer::OperatorToken.new(:+),
+          Lexer::OperandToken.new(1),
+          Lexer::OperatorToken.new(:+),
         ]
 
         result = calculator.run tokens
@@ -53,9 +53,9 @@ module RpnCalculator
 
       it "works with with floats" do
         tokens = [
-          OperandToken.new(0.1),
-          OperandToken.new(0.1),
-          OperatorToken.new(:+),
+          Lexer::OperandToken.new(0.1),
+          Lexer::OperandToken.new(0.1),
+          Lexer::OperatorToken.new(:+),
         ]
 
         result = calculator.run tokens
@@ -65,9 +65,9 @@ module RpnCalculator
 
       it "subtracts" do
         tokens = [
-          OperandToken.new(5),
-          OperandToken.new(4),
-          OperatorToken.new(:-),
+          Lexer::OperandToken.new(5),
+          Lexer::OperandToken.new(4),
+          Lexer::OperatorToken.new(:-),
         ]
 
         result = calculator.run tokens
@@ -77,9 +77,9 @@ module RpnCalculator
 
       it "multiplies" do
         tokens = [
-          OperandToken.new(5),
-          OperandToken.new(4),
-          OperatorToken.new(:*),
+          Lexer::OperandToken.new(5),
+          Lexer::OperandToken.new(4),
+          Lexer::OperatorToken.new(:*),
         ]
 
         result = calculator.run tokens
@@ -89,9 +89,9 @@ module RpnCalculator
 
       it "divides" do
         tokens = [
-          OperandToken.new(20),
-          OperandToken.new(4),
-          DivisionOperatorToken.new(:/),
+          Lexer::OperandToken.new(20),
+          Lexer::OperandToken.new(4),
+          Lexer::DivisionOperatorToken.new(:/),
         ]
 
         result = calculator.run tokens
@@ -101,9 +101,9 @@ module RpnCalculator
 
       it "handles divite by zero" do
         tokens = [
-          OperandToken.new(1),
-          OperandToken.new(0),
-          DivisionOperatorToken.new(:/),
+          Lexer::OperandToken.new(1),
+          Lexer::OperandToken.new(0),
+          Lexer::DivisionOperatorToken.new(:/),
         ]
 
         expect { calculator.run tokens }.not_to raise_error

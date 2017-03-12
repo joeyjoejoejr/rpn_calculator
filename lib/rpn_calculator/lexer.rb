@@ -1,45 +1,4 @@
 module RpnCalculator
-  class OperandToken
-    attr_accessor :value
-    def initialize(value)
-      self.value = value
-    end
-
-    def execute(operands)
-      operands.push(value)
-    end
-  end
-
-  class OperatorToken
-    attr_accessor :value
-    def initialize(value)
-      self.value = value
-    end
-
-    def execute(operands)
-      operands.last(2).reduce(value).tap do |result|
-        operands.push result
-      end
-    end
-  end
-
-  class DivisionOperatorToken
-    attr_accessor :value
-    def initialize(value)
-      self.value = value
-    end
-
-    def execute(operands)
-      operands.last(2).reduce(value).tap do |result|
-        raise ZeroDivisionError unless result.finite?
-        operands.push result
-      end
-
-    rescue ZeroDivisionError
-      ZERO_DIVISION_MESSAGE
-    end
-  end
-
   class Lexer
     def parse(line)
       line.chomp.split.map do |token_string|

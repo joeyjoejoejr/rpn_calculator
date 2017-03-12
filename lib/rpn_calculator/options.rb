@@ -19,7 +19,7 @@ module RpnCalculator
     def parse!
       $stdout = io_streams.output_stream
       $stderr = io_streams.output_stream
-      parser.parse io_streams.argv
+      parser.parse! io_streams.argv
     rescue OptionParser::ParseError => error
       logger.error error, parser
 
