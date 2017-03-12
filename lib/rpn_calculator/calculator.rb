@@ -6,22 +6,8 @@ module RpnCalculator
 
     def run(tokens)
       tokens.map do |token|
-        case
-        when token.operand?
-          operands << token.value
-
-          token.value
-        when token.operator?
-          operands.last(2).reduce(token.value).tap do |operand|
-            raise ZeroDivisionError unless operand.finite?
-            operands << operand
-            self.operands = operands.last(2)
-          end
-        end
+        token.execute(@operands)
       end.compact.last
-
-    rescue
-      ZERO_DIVISION_MESSAGE
     end
 
     private

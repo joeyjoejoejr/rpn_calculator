@@ -87,11 +87,11 @@ module RpnCalculator
         expect(result).to eq 20
       end
 
-      it "devides" do
+      it "divides" do
         tokens = [
           OperandToken.new(20),
           OperandToken.new(4),
-          OperatorToken.new(:/),
+          DivisionOperatorToken.new(:/),
         ]
 
         result = calculator.run tokens
@@ -103,7 +103,7 @@ module RpnCalculator
         tokens = [
           OperandToken.new(1),
           OperandToken.new(0),
-          OperatorToken.new(:/),
+          DivisionOperatorToken.new(:/),
         ]
 
         expect { calculator.run tokens }.not_to raise_error
