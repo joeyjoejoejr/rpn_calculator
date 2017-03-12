@@ -42,23 +42,21 @@ module RpnCalculator
             expect(output_stream.string).to match /goodbye/i
           end
 
-          it "works with many numbers" do
-            expected = (1..100).reduce :+
-
+          it "only operates on the last two numbers" do
             input_stream.print (1..100).reduce('') { |acc, val| "#{acc} #{val}" }
             input_stream.puts " + q"
             input_stream.rewind
 
             InteractiveCalculator.start(input_stream, output_stream)
-            expect(output_stream.string).to match /#{expected}/i
+            expect(output_stream.string).to match /199/i
           end
 
           it "works with input on separate lines" do
-            input_stream.puts "1", "2", "3", "+", "q"
+            input_stream.puts "2", "3", "+", "q"
             input_stream.rewind
 
             InteractiveCalculator.start(input_stream, output_stream)
-            expect(output_stream.string).to match /6/
+            expect(output_stream.string).to match /5/
           end
         end
       end

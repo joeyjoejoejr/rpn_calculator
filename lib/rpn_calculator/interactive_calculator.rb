@@ -7,7 +7,7 @@ module RpnCalculator
         input_stream.gets.chomp.split.each do |token|
           case
           when token.match(/^-?[0-9]+$/)
-            digits << token.to_i
+            digits = [digits[-1], token.to_i]
           when token.match(/^\+$/)
             output_stream.puts digits.reduce(:+)
             digits = []
