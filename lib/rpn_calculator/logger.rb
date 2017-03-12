@@ -1,6 +1,7 @@
 module RpnCalculator
   PROMPT_MESSAGE = "rpn > "
   GOODBYE_MESSAGE = "Exiting interactive rpn..."
+  ZERO_DIVISION_MESSAGE = "That's how you make black holes, be careful!"
 
   class Logger
     def initialize(io_streams)

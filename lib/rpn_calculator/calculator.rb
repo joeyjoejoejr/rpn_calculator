@@ -1,7 +1,7 @@
 module RpnCalculator
   class Calculator
     def initialize
-      @operands = []
+      @operands = [0]
     end
 
     def run(tokens)
@@ -9,12 +9,19 @@ module RpnCalculator
         case
         when token.operand?
           operands << token.value
+
           token.value
         when token.operator?
-          self.operands = operands.last(2)
-          operands.reduce(token.value)
+          operands.last(2).reduce(token.value).tap do |operand|
+            raise ZeroDivisionError unless operand.finite?
+            operands << operand
+            self.operands = operands.last(2)
+          end
         end
       end.compact.last
+
+    rescue
+      ZERO_DIVISION_MESSAGE
     end
 
     private
