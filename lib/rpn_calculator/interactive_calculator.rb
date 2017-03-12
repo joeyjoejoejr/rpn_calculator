@@ -6,8 +6,8 @@ module RpnCalculator
       digits = []
       loop do
         done = false
-        input_stream.gets.chomp.split.each do |token|
         output_stream.print PROMPT_MESSAGE
+        input_stream.readline.chomp.split.each do |token|
           case
           when token.match(/^-?[0-9]+$/)
             output_stream.puts token
@@ -23,6 +23,9 @@ module RpnCalculator
 
         done && break;
       end
+
+    rescue Interrupt, EOFError
+      output_stream.puts GOODBYE_MESSAGE
     end
   end
 end
