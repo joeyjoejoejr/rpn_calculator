@@ -1,0 +1,12 @@
+#! /usr/bin/env ruby -w
+
+
+$LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
+require "rpn_calculator/cli"
+
+begin
+  RpnCalculator::Cli.new.start
+rescue StandardError => error
+  STDERR.puts error
+  exit 1
+end
