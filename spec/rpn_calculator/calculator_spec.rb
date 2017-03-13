@@ -37,18 +37,18 @@ module RpnCalculator
         expect(result).to eq 199
       end
 
-      it "saves the last result in the operands" do
+      it "pops the values from the stack" do
         tokens = [
-          Lexer::OperandToken.new(1),
-          Lexer::OperandToken.new(1),
-          Lexer::OperatorToken.new(:+),
-          Lexer::OperandToken.new(1),
-          Lexer::OperatorToken.new(:+),
+          Lexer::OperandToken.new(5.0),
+          Lexer::OperandToken.new(9.0),
+          Lexer::OperandToken.new(1.0),
+          Lexer::OperatorToken.new(:-),
+          Lexer::DivisionOperatorToken.new(:/),
         ]
 
         result = calculator.run tokens
 
-        expect(result).to eq 3
+        expect(result).to eq 0.625
       end
 
       it "works with with floats" do
@@ -89,8 +89,8 @@ module RpnCalculator
 
       it "divides" do
         tokens = [
-          Lexer::OperandToken.new(20),
-          Lexer::OperandToken.new(4),
+          Lexer::OperandToken.new(20.0),
+          Lexer::OperandToken.new(4.0),
           Lexer::DivisionOperatorToken.new(:/),
         ]
 

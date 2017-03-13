@@ -7,7 +7,7 @@ module RpnCalculator
       end
 
       def execute(operands)
-        operands.last(2).reduce(value).tap do |result|
+        operands.pop(2).reduce(value).tap do |result|
           operands.push(result).compact!
         end
       end
