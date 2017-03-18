@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'bigdecimal'
 
 module RpnCalculator
   RSpec.describe Lexer do

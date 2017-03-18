@@ -96,6 +96,16 @@ module RpnCalculator
 
             expect(output_stream.string).to match /5/
           end
+
+          it "gives user friendly output" do
+            input_stream.puts "0.1", "0.2", "+", "q"
+            input_stream.rewind
+            puts input_stream.string
+
+            Cli.new(io_streams: io_streams).start
+
+            expect(output_stream.string).to match /0\.3\b/
+          end
         end
 
         describe "- operator" do

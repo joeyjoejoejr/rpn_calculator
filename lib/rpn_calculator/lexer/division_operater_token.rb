@@ -10,7 +10,7 @@ module RpnCalculator
         operands.pop(2).reduce(value).tap do |result|
           raise ZeroDivisionError unless result.finite?
           operands.push(result).compact!
-        end
+        end.to_f
 
       rescue ZeroDivisionError
         ZERO_DIVISION_MESSAGE
