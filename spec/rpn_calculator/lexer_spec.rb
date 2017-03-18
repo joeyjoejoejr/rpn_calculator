@@ -16,10 +16,11 @@ module RpnCalculator
       end
 
       describe "parses floats" do
-        %w{ 1.0 0.2 -1.1 1.000000001}.each do |operand|
+        %w{ 1.0 0.2 -1.1 11.3 1.000000001}.each do |operand|
           it operand do
             parsed = lexer.parse operand
 
+            expect(parsed.first.value).to be_a BigDecimal
             expect(parsed.first.value).to eq operand.to_f
           end
         end

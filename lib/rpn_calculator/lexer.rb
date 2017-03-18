@@ -3,7 +3,7 @@ module RpnCalculator
     def parse(line)
       line.chomp.split.map do |token_string|
         case
-        when token_string.match(/^-?[0-9]\.?[0-9]*+$/)
+        when token_string.match(/^-?\d+\.?\d*+$/)
           OperandToken.new token_string.to_f
         when token_string.match(/^([\+\*-]|\*\*)?$/)
           OperatorToken.new token_string.to_sym
